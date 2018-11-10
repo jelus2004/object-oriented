@@ -48,7 +48,7 @@ class Oeuvre {
     public String getLangue() {
         return langue;
     }
-    public void afficher {
+    public void afficher() {
         System.out.println(titre + ", " + a.getNom() + ", en " + langue);
     }
 }

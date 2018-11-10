@@ -1,4 +1,6 @@
-class Banque1 {
+package banque.v1;
+
+public class Banque {
 
     public static void main(String[] args) {
         // Données pour tous les comptes privés (taux d'intérêt):
@@ -44,8 +46,8 @@ class Banque1 {
                                double solde1, double solde2) {
         // Cette méthode affiche les données du client
         System.out.println("Client " + nom + " de " + ville);
-        System.out.println("   Compte3 prive:     " + solde1 + " francs");
-        System.out.println("   Compte3 d'epargne: " + solde2 + " francs");
+        System.out.println("   Compte prive:     " + solde1 + " francs");
+        System.out.println("   Compte d'epargne: " + solde2 + " francs");
     }
 
     static double bouclerCompte(double solde, double taux) {
