@@ -7,14 +7,14 @@ public class Banque {
         double taux1 = 0.01;
         // Données pour tous les comptes d'épargne (taux d'intérêt):
         double taux2 = 0.02;
-        // Données pour le premier client (nom et ville):
+        // Données pour le premier client (getNom et ville):
         String nom1 = "Pedro";
         String ville1 = "Geneve";
         // Données pour le compte privé du premier client (solde):
         double solde1PremierClient = 1000.0;
         // Données pour le compte d'épargne du premier client (solde):
         double solde2PremierClient = 2000.0;
-        // Données pour le deuxième client (nom et ville):
+        // Données pour le deuxième client (getNom et ville):
         String nom2 = "Alexandra";
         String ville2 = "Lausanne";
         // Données pour le compte privé du deuxième client (solde):
