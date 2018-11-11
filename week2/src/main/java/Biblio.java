@@ -1,3 +1,4 @@
+import javax.swing.undo.AbstractUndoableEdit;
 import java.util.ArrayList;
 
 class Auteur {
@@ -26,46 +27,133 @@ class Auteur {
 class Oeuvre {
     // Completer la classe Oeuvre ici
     private String titre;
-    private Auteur a;
+    private Auteur auteur;
     private String langue;
 
-    public Oeuvre(String titre, Auteur a) {
+    public Oeuvre(String titre, Auteur auteur) {
         this.titre = titre;
-        this.a = a;
+        this.auteur = auteur;
         langue = "francais";
     }
-    public Oeuvre(String titre, Auteur a, String langue) {
+    public Oeuvre(String titre, Auteur auteur, String langue) {
         this.titre = titre;
-        this.a = a;
+        this.auteur = auteur;
         this.langue = langue;
     }
     public String getTitre() {
         return titre;
     }
-    public Auteur getA() {
-        return a;
+    public Auteur getAuteur() {
+        return auteur;
     }
     public String getLangue() {
         return langue;
     }
     public void afficher() {
-        System.out.println(titre + ", " + a.getNom() + ", en " + langue);
+        System.out.println(titre + ", " + auteur.getNom() + ", en " + langue);
     }
 }
 
 // completer les autres classes ici
 
 class Exemplaire {
-    public Exemplaire() {
-        System.out.println("Nouvel exemplaire -> ");
-    }
-    public void afficher() {
+    private final Oeuvre oeuvre;
 
+    public Exemplaire(Oeuvre oeuvre) {
+        this.oeuvre = oeuvre;
+        System.out.printf("Nouvel exemplaire -> %s, %s, en %s\n", oeuvre.getTitre(), oeuvre.getAuteur().getNom(), oeuvre.getLangue());
+    }
+
+    public Exemplaire(Exemplaire copie) {
+        this.oeuvre = copie.oeuvre;
+        System.out.printf("Copie d’un exemplaire de -> %s, %s, en %s\n", oeuvre.getTitre(), oeuvre.getAuteur().getNom(), oeuvre.getLangue());
+    }
+
+    public Oeuvre getOeuvre() {
+        return oeuvre;
+    }
+
+    public void afficher() {
+        System.out.print("Un exemplaire de ");
+        oeuvre.afficher();
     }
 }
 
 class Bibliotheque {
 
+    private final String nom;
+    private ArrayList<Exemplaire> exemplaires = new ArrayList<>();
+
+    public Bibliotheque(String nom) {
+        this.nom = nom;
+        System.out.printf("La bibliothèque %s est ouverte !\n", nom);
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public int getNbExemplaires() {
+        return exemplaires.size();
+    }
+
+    public void stocker(Oeuvre oeuvre, int nbExemplaires) {
+        while (nbExemplaires-- > 0) {
+            stocker(oeuvre);
+        }
+    }
+
+    public void stocker(Oeuvre oeuvre) {
+        exemplaires.add(new Exemplaire(oeuvre));
+    }
+
+    public ArrayList<Exemplaire> listerExemplaires() {
+        return exemplaires;
+    }
+
+    public ArrayList<Exemplaire> listerExemplaires(String langue) {
+        if (langue.isEmpty()) {
+            return exemplaires;
+        }
+        return listerExemplairesLangue(langue);
+    }
+
+    public ArrayList<Exemplaire> listerExemplairesLangue(String langue) {
+        ArrayList<Exemplaire> exemplairesLangue = new ArrayList<>();
+        for (Exemplaire exemplaire : exemplaires) {
+            if (exemplaire.getOeuvre().getLangue().equals(langue)) {
+                exemplairesLangue.add(exemplaire);
+            }
+        }
+        return exemplairesLangue;
+    }
+
+    public int compterExemplaires(Oeuvre oeuvre) {
+        int nbExemplaires = 0;
+
+        for (Exemplaire exemplaire : exemplaires) {
+            if (exemplaire.getOeuvre().equals(oeuvre)) {
+                nbExemplaires++;
+            }
+        }
+        return nbExemplaires;
+    }
+
+    public void afficherAuteur() {
+        ArrayList<Auteur> auteurs = new ArrayList<>();
+
+        for (Exemplaire exemplaire : exemplaires) {
+            if (!auteurs.contains(exemplaire.getOeuvre().getAuteur())) {
+                auteurs.add(exemplaire.getOeuvre().getAuteur());
+            }
+        }
+
+        for (Auteur auteur : auteurs) {
+            if (auteur.getPrix()) {
+                System.out.println(auteur.getNom());
+            }
+        }
+    }
 }
 
 
@@ -100,7 +188,6 @@ public class Biblio {
         Oeuvre o4 = new Oeuvre("Zazie dans le metro", a3, "francais");
         Oeuvre o5 = new Oeuvre("The count of Monte-Cristo", a2, "anglais");
 
-/*
         Bibliotheque biblio = new Bibliotheque("municipale");
         biblio.stocker(o1, 2);
         biblio.stocker(o2);
@@ -118,6 +205,5 @@ public class Biblio {
         biblio.afficherAuteur();
         System.out.print("Il y a " + biblio.compterExemplaires(o3) + " exemplaires");
         System.out.println(" de  " + o3.getTitre());
-*/
     }
 }
