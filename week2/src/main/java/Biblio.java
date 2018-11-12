@@ -1,4 +1,3 @@
-import javax.swing.undo.AbstractUndoableEdit;
 import java.util.ArrayList;
 
 class Auteur {
@@ -35,20 +34,25 @@ class Oeuvre {
         this.auteur = auteur;
         langue = "francais";
     }
+
     public Oeuvre(String titre, Auteur auteur, String langue) {
         this.titre = titre;
         this.auteur = auteur;
         this.langue = langue;
     }
+
     public String getTitre() {
         return titre;
     }
+
     public Auteur getAuteur() {
         return auteur;
     }
+
     public String getLangue() {
         return langue;
     }
+
     public void afficher() {
         System.out.println(titre + ", " + auteur.getNom() + ", en " + langue);
     }
@@ -139,18 +143,20 @@ class Bibliotheque {
         return nbExemplaires;
     }
 
-    public void afficherAuteur() {
-        ArrayList<Auteur> auteurs = new ArrayList<>();
-
+    public void afficherAuteur(boolean prime) {
         for (Exemplaire exemplaire : exemplaires) {
-            if (!auteurs.contains(exemplaire.getOeuvre().getAuteur())) {
-                auteurs.add(exemplaire.getOeuvre().getAuteur());
+            if (prime && exemplaire.getOeuvre().getAuteur().getPrix()) {
+                System.out.println(exemplaire.getOeuvre().getAuteur().getNom());
+            } else if (!prime && !exemplaire.getOeuvre().getAuteur().getPrix()) {
+                System.out.println(exemplaire.getOeuvre().getAuteur().getNom());
             }
         }
+    }
 
-        for (Auteur auteur : auteurs) {
-            if (auteur.getPrix()) {
-                System.out.println(auteur.getNom());
+    public void afficherAuteur() {
+        for (Exemplaire exemplaire : exemplaires) {
+            if (exemplaire.getOeuvre().getAuteur().getPrix()) {
+                System.out.println(exemplaire.getOeuvre().getAuteur().getNom());
             }
         }
     }

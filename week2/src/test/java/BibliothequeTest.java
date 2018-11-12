@@ -71,8 +71,7 @@ public class BibliothequeTest {
 
     @Test
     public void devraitAfficherLesAuteursPrimes() {
-        biblio.stocker(o4);
         InputOutputAsserts.assertOutput(() -> biblio.afficherAuteur())
-                .hasOutput("Alexandre Dumas" + NEW_LINE + "Raymond Queneau" + NEW_LINE);
+                .hasOutput("Alexandre Dumas" + NEW_LINE + "Alexandre Dumas" + NEW_LINE + "Alexandre Dumas" + NEW_LINE + "Raymond Queneau" + NEW_LINE + "Alexandre Dumas" + NEW_LINE );
     }
 }
