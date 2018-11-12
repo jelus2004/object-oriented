@@ -12,6 +12,7 @@
         <module>week1</module>
         <module>week2</module>
         <module>commons</module>
+        <module>week3</module>
     </modules>
 
     <properties>
