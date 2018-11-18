@@ -4,24 +4,47 @@ import java.util.ArrayList;
  * Completez le programme a partir d'ici.
  *******************************************/
 class Construction {
-    final private ArrayList<Piece> composants;
+    final private ArrayList<Composant> composants;
+    private int nbMaxPieces;
 
     public Construction(int nbPieces) {
         composants = new ArrayList<>(nbPieces);
+        nbMaxPieces = nbPieces;
+    }
+
+    public int taille() {
+        return composants.size();
+    }
+
+    public int tailleMax() {
+        return nbMaxPieces;
     }
 
     public void ajouterComposant(Piece piece, int quantite) {
-        composants.add(piece);
+        if (composants.size() + 1 > nbMaxPieces) {
+            System.out.println("Ajout de composant impossible");
+        } else {
+            composants.add(new Composant(piece, quantite));
+        }
+    }
+
+    public String toString() {
+        String toreturn = "";
+        for (Composant composant : composants) {
+            toreturn += composant.toString() + "\n";
+        }
+        return toreturn;
     }
 }
 
-class Composant{
+class Composant {
     private int quantite;
     private Piece piece;
 
-    public Composant(int quantite, Piece piece) {
+    public Composant(Piece piece, int quantite) {
         this.quantite = quantite;
         this.piece = piece;
+        new Piece(piece.getNom());
     }
 
     public Piece getPiece() {
@@ -30,6 +53,10 @@ class Composant{
 
     public int getQuantite() {
         return quantite;
+    }
+
+    public String toString() {
+        return piece.toString() + " (quantite " + quantite + ")";
     }
 }
 
@@ -54,34 +81,51 @@ class Simple extends Piece {
 
     public Simple(String nom, String orientation) {
         super(nom);
-        if (orientation.isEmpty()) {
-            this.orientation = "aucune";
-        } else {
-            this.orientation = orientation;
-        }
+        this.orientation = orientation;
     }
 
     public Simple(String nom) {
         super(nom);
-        orientation = "aucune";
+        orientation = "";
+    }
+
+    public String getOrientation() {
+        return orientation;
     }
 
     @Override
     public String toString() {
-        return super.toString() + String.format("[%s]", orientation);
+        if (orientation.equals("")) {
+            return super.toString();
+        }
+        return super.toString() + " " + orientation;
     }
 }
 
 class Composee extends Piece {
     final private ArrayList<Piece> pieces;
+    private int nbMaxPieces;
 
     public Composee(String nom, int nbMaxPieces) {
         super(nom);
         pieces = new ArrayList<>(nbMaxPieces);
+        this.nbMaxPieces = nbMaxPieces;
     }
 
-    public void construire(Simple simple) {
-        pieces.add(simple);
+    public int taille() {
+        return pieces.size();
+    }
+
+    public int tailleMax() {
+        return nbMaxPieces;
+    }
+
+    public void construire(Piece piece) {
+        if (pieces.size() + 1 > nbMaxPieces) {
+            System.out.println("Construction impossible");
+        } else {
+            pieces.add(piece);
+        }
     }
 
     @Override
@@ -90,9 +134,9 @@ class Composee extends Piece {
         toreturn = getNom() + " (";
         for (int i = 0; i < pieces.size(); i++) {
             if (i < pieces.size() - 1) {
-                toreturn = pieces.get(i).getNom() + ", ";
+                toreturn += pieces.get(i).toString() + ",";
             } else {
-                toreturn = pieces.get(i).getNom() + ") ";
+                toreturn += pieces.get(i).toString() + ")";
             }
         }
         return toreturn;
@@ -129,7 +173,7 @@ class Lego {
         // le jeu a pour second composant: 1 porte
         maison.ajouterComposant(porte, 1);
 
-        // dÃ©clare une piece composee de 3 autres pieces dont le nom est "fenetre"
+        // déclare une piece composee de 3 autres pieces dont le nom est "fenetre"
         Composee fenetre = new Composee("fenetre", 3);
 
         // cette piece composee est constitu'ee des trois pieces simples:
