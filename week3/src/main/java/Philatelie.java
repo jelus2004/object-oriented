@@ -27,6 +27,18 @@ class Timbre {
         this.pays = pays;
         this.valeurFaciale = valeurFaciale;
     }
+    public Timbre(String code, int annee, String pays) {
+        this(code, annee, pays, VALEUR_TIMBRE_DEFAUT);
+    }
+    public Timbre(String code, int annee) {
+        this(code, annee, PAYS_DEFAUT);
+    }
+    public Timbre(String code) {
+        this(code, ANNEE_COURANTE);
+    }
+    public Timbre() {
+        this(CODE_DEFAUT);
+    }
 
     public int age() {
         return ANNEE_COURANTE - annee;
@@ -77,8 +89,20 @@ class Rare extends Timbre {
             prixBase = PRIX_BASE_3;
         }
     }
+    public Rare(String code, int annee, String pays, int nbExemplaires) {
+        this(code, annee, pays, VALEUR_TIMBRE_DEFAUT, nbExemplaires);
+    }
+    public Rare(String code, int annee, int nbExemplaires) {
+        this(code, annee, PAYS_DEFAUT, nbExemplaires);
+    }
+    public Rare(String code, int nbExemplaires) {
+        this(code, ANNEE_COURANTE, nbExemplaires);
+    }
+    public Rare(int nbExemplaires) {
+        this(CODE_DEFAUT, nbExemplaires);
+    }
 
-    public int getNbExemplaires() {
+    public int getExemplaires() {
         return nbExemplaires;
     }
 
@@ -97,10 +121,22 @@ class Commemoratif extends Timbre {
     public Commemoratif(String code, int annee, String pays, double valeurFaciale) {
         super(code, annee, pays, valeurFaciale);
     }
+    public Commemoratif(String code, int annee, String pays) {
+        this(code, annee, pays, VALEUR_TIMBRE_DEFAUT);
+    }
+    public Commemoratif(String code, int annee) {
+        this(code, annee, PAYS_DEFAUT);
+    }
+    public Commemoratif(String code) {
+        this(code, ANNEE_COURANTE);
+    }
+    public Commemoratif() {
+        this(CODE_DEFAUT);
+    }
 
     @Override
     public String toString() {
-        return super.toString() + String.format("\nTimbre celebrant un evenement");
+        return super.toString() + ("\nTimbre celebrant un evenement");
     }
 
     @Override
