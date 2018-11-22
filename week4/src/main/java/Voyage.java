@@ -28,8 +28,8 @@ class Sejour extends OptionVoyage {
 }
 
 class Transport extends OptionVoyage {
-    public final double TARIF_LONG = 1500.0;
-    public final double TARIF_BASE = 200.0;
+    public static final double TARIF_LONG = 1500.0;
+    public static final double TARIF_BASE = 200.0;
     private double tarif;
     private boolean longTrajet;
 
