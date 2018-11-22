@@ -78,6 +78,7 @@ class Piece {
 
 class Simple extends Piece {
     private String orientation;
+    private final String ORIENTATION_DEFAUT = "aucune";
 
     public Simple(String nom, String orientation) {
         super(nom);
@@ -86,7 +87,7 @@ class Simple extends Piece {
 
     public Simple(String nom) {
         super(nom);
-        orientation = "";
+        orientation = ORIENTATION_DEFAUT;
     }
 
     public String getOrientation() {
@@ -95,7 +96,7 @@ class Simple extends Piece {
 
     @Override
     public String toString() {
-        if (orientation.equals("")) {
+        if (orientation.equals(ORIENTATION_DEFAUT)) {
             return super.toString();
         }
         return super.toString() + " " + orientation;
